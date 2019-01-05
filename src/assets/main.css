@@ -1,0 +1,125 @@
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/preflight";
+ */
+
+
+ @tailwind preflight;
+
+.router-link-exact-active {
+  @apply bg-grey-darker;
+}
+
+.clickable {
+    -webkit-app-region: no-drag;
+  }
+
+.border-backblack {
+  border-color: black;
+}
+
+::-webkit-scrollbar {
+  background-color: #2B2B2B;
+  border-left: 1px solid #3E3E3E;
+  width: .65rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background:  #6B6B6B;
+  border-radius: 10px;
+}
+
+.discover-banner{
+  background: url("./title.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 110px;
+}
+
+
+/* CHECKBOX TOGGLE SWITCH */
+.form-switch {
+  @apply relative select-none w-12 mr-2 leading-normal;
+}
+.form-switch-checkbox {
+  @apply hidden;
+}
+.form-switch-label {
+  @apply block overflow-hidden cursor-pointer bg-grey border rounded-full h-6  shadow-inner;
+
+  transition: background-color 0.2s ease-in;
+}
+.form-switch-label:before {
+  @apply absolute block bg-white pin-y w-6 border rounded-full -ml-1;
+  
+  right: 50%;
+  content: "";
+  transition: all 0.2s ease-in;
+}
+.form-switch-checkbox:checked + .form-switch-label,
+.form-switch-checkbox:checked + .form-switch-label:before {
+
+}
+.form-switch-checkbox:checked + .form-switch-label {
+  @apply bg-blue shadow-none;
+}
+.form-switch-checkbox:checked + .form-switch-label:before {
+  @apply pin-r;
+}
+
+/**
+ * This injects any component classes registered by plugins.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/components";
+ */
+@tailwind components;
+
+/**
+ * Here you would add any of your custom component classes; stuff that you'd
+ * want loaded *before* the utilities so that the utilities could still
+ * override them.
+ *
+ * Example:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+
+/**
+ * This injects all of Tailwind's utility classes, generated based on your
+ * config file.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/utilities";
+ */
+@tailwind utilities;
+
+/**
+ * Here you would add any custom utilities you need that don't come out of the
+ * box with Tailwind.
+ *
+ * Example :
+ *
+ * .bg-pattern-graph-paper { ... }
+ * .skew-45 { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "utilities/background-patterns";
+ * @import "utilities/skew-transforms";
+ */
