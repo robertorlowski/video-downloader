@@ -67,7 +67,7 @@
     <h1 class="mb-12">{{ title }}</h1>
     <p></p>
     --<button class="text-white bg-blue px-4 py-2 rounded-lg" @click="$router.go(-1)">Back</button>--
-    <button class="text-white bg-blue px-4 py-2 rounded-lg" @click="youTobe()">Back</button>
+    <button class="text-white bg-blue px-4 py-2 rounded-lg" @click="youTube()">Back</button>
   
       
     </div>    
@@ -81,7 +81,8 @@
   import Loading from 'vue-loading-overlay';
   // Import stylesheet
   import 'vue-loading-overlay/dist/vue-loading.css';
-  
+  import Utils from '../Utils';
+
   const ytdl = require('ytdl-core');
   var video;
   var writer;
@@ -146,8 +147,11 @@
           
         const output = path.resolve(
                 this.destinanionFolder.toString().replace('\\','\\\\'), 
-                this.title.toString().replace(':','').replace('.','').replace('|','').replace('\\','').replace('&','') +'.mp4');                  
-        
+                //this.title.toString().replace(':','').replace('.','').replace('|','').replace('\\','').replace('&','') +'.mp4');                  
+                Utils.slugify(this.title.toString()) + '.mp4'
+        );
+        console.log(output);
+
         ytdl.getInfo(this.url, (err, info) => {
           if (err) 
             throw err;

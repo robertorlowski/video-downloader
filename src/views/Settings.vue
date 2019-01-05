@@ -1,6 +1,6 @@
 <template>
   <div class="bg-black text-white flex-1 ml-56 pl-6">
-    <headerapp></headerapp>
+    <headerapp title="Settings"></headerapp>
     <div class="flex-1 w-full text-left">
       <label class="font-light mr-3">Destination foder for video files:</label>
       <div class="flex search-container text-center pt-1 relative">      

@@ -8,7 +8,8 @@ import {
   Menu,
   nativeImage,
   ipcMain,
-  dialog
+  dialog,
+  remote
 } from "electron";
 
 import {
@@ -17,6 +18,7 @@ import {
 } from "vue-cli-plugin-electron-builder/lib";
 
 import store from "./store";
+
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 process.env.FLUENTFFMPEG_COV = false;
@@ -60,7 +62,6 @@ function createWindow() {
  
   win.setOpacity(0.98);
 
-
   if (isDevelopment) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
@@ -94,12 +95,10 @@ function createWindow() {
 
   createTray();
 
-  //set current folder
-  if ( store.getters.destinanionFolder == "" ) {
-    store.dispatch("updateDestinanionFolder", app.getAppPath());
-  }
+  console.log("Init database");
+  store.dispatch("initDatabase", (app || remote.app).getPath('userData'));
 }
-
+  
 const handleError = (title, error) => {
   console.log(title);
   console.log(error);
@@ -111,8 +110,7 @@ process.on('uncaughtException', error => {
 
 process.on('unhandledRejection', error => {
   handleError('Unhandled Promise Rejection', error);
-});
-
+});   
 
 function createTray() {
 
@@ -147,7 +145,7 @@ app.on("window-all-closed", () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
-    app.quit();
+    closeApp();
   }
 });
 
@@ -176,21 +174,30 @@ if (isDevelopment) {
   if (process.platform === "win32") {
     process.on("message", data => {
       if (data === "graceful-exit") {
-        app.quit();
+        closeApp();
       }
     });
   } else {
     process.on("SIGTERM", () => {
-      app.quit();
+      closeApp();
     });
   }
 }
 
 function closeApp() {
-  app.isQuiting = true;
-  app.quit();
-  if (tray)
-    tray.destroy();
+  console.log("close database");
+  store.subscribe((mutation)=>{
+    if (mutation.type ==='closeDatabase') {
+      console.log("close app");
+      app.isQuiting = true;
+      app.quit();
+      if (tray) {
+        tray.destroy();
+      }    
+    }  
+  });
+  
+  store.dispatch("closeDatabase");
 }
 
 function hideApp() {
@@ -219,4 +226,3 @@ ipcMain.on('choose-folder', function() {
       }
   });
 });
-

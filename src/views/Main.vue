@@ -1,9 +1,9 @@
 <template>
   <div class="bg-black text-white flex-1 ml-56 pl-6">
-    <headerapp></headerapp>
+    <headerapp title="YouTube downloader"></headerapp>
 
     <div class="flex-1 text-left">
-      <label class="font-light mr-3">YouTobe address:</label>
+      <label class="font-light mr-3">YouTube address:</label>
       <div class="w-full flex search-container text-center pt-1 relative">      
         <input ref="url" type="text" placeholder="https://www.youtube.com" class="bg-black text-grey-light w-full p-2 pl-8 border-b">
         <div class="absolute pin-t py-3 px-1 text-grey-light">

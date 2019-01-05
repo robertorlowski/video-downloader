@@ -22,7 +22,7 @@
         <svg fill="currentColor" class="mr-3" width="24px" height="24px" viewBox="0 0 20 20">
           <path d="M0 4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm6 0v12h8V4H6zM2 5v2h2V5H2zm0 4v2h2V9H2zm0 4v2h2v-2H2zm14-8v2h2V5h-2zm0 4v2h2V9h-2zm0 4v2h2v-2h-2zM8 7l5 3-5 3V7z"/>
         </svg>
-        <div class="text-white">YouTobe</div>
+        <div class="text-white">YouTube</div>
       </router-link>
 
       <router-link to="/settings" class="sidebar-icon flex items-center px-4 py-2 text-grey cursor-pointer hover:bg-grey-darker no-underline">
@@ -46,8 +46,7 @@ export default {
     hide: function() {
       ipcRenderer.send("hide-app");
     }
-
-}
+  } 
 };
 </script>
 
