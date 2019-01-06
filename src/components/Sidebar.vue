@@ -4,8 +4,8 @@
   <div class="w-56 bg-grey-darkest text-white border-r border-backblack fixed min-h-screen pt-3" style="-webkit-app-region: drag">
     <div class="w-full flex-1 pl-4 pt-1">
         <button class="clickable select-none text-white bg-red-light rounded-full button-window" @click="close">          
-          <svg width="14px" height="14px" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-            <path fill="currentColor" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+          <svg width="12px" height="12px" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+          <path fill="currentColor" d="M1175 1321l146-146q10-10 10-23t-10-23l-233-233 233-233q10-10 10-23t-10-23l-146-146q-10-10-23-10t-23 10l-233 233-233-233q-10-10-23-10t-23 10l-146 146q-10 10-10 23t10 23l233 233-233 233q-10 10-10 23t10 23l146 146q10 10 23 10t23-10l233-233 233 233q10 10 23 10t23-10zm617-1033v1216q0 66-47 113t-113 47h-1472q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1472q66 0 113 47t47 113z"/>
           </svg>
         </button>            
 
