@@ -96,7 +96,7 @@
           if (this.autoDownload) {
             this.download();
           }  
-          console.log(info);
+          //console.log(info);
       });
     },
 
@@ -128,7 +128,7 @@
                 //this.title.toString().replace(':','').replace('.','').replace('|','').replace('\\','').replace('&','') +'.mp4');                  
                 Utils.slugify(this.title.toString()) + '.mp4'
         );
-        console.log(output);
+        //console.log(output);
 
         ytdl.getInfo(this.url, (err, info) => {
           if (err) 
@@ -148,7 +148,7 @@
             this.size = ((total /1000000).toFixed(0)).toString() +" MB";
             const percent = downloaded / total;
             this.progress = (percent * 100).toFixed(0);
-            console.log(`${(percent * 100).toFixed(0)}% downloaded`);
+            //console.log(`${(percent * 100).toFixed(0)}% downloaded`);
           });
           
           video.on('end', () => {

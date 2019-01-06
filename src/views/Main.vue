@@ -43,12 +43,12 @@ export default {
     }
   },
   mounted() {
-    this.$store.subscribe((mutation, state)=>{
+    this.$store.subscribe((mutation)=>{
       if (mutation.type ==='addVideo') {
-        console.log(state.videoIds);
+        //console.log(state.videoIds);
 
         const vvv = this.$store.getters.videoLastAdded;
-        console.log(vvv);
+        //console.log(vvv);
         
         if ( vvv == undefined || vvv == null ) {
           return;
@@ -112,7 +112,7 @@ export default {
       });
       
       instance.$on('playVideo', (url, title) => {
-        console.log(url);
+        //console.log(url);
         this.$router.push({
           name: 'player',
           params: { url: url, title: title, router: "main-view" }
@@ -120,7 +120,7 @@ export default {
       });
 
       instance.$on('addHistory', (hist) => {
-        console.log(hist);
+        //console.log(hist);
         this.$store.dispatch("addHistory",hist);    
       });
  
