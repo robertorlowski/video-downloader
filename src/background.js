@@ -25,9 +25,8 @@ process.env.FLUENTFFMPEG_COV = false;
 
 const path = require('path');
 
-var iconFile;
-iconFile = path.join(__static, 'assets/app.png');
-
+const iconFile = path.join(__static, 'assets/app.png');
+const trayIcon = nativeImage.createFromPath(iconFile);
 /*
 if (
   process.env.NODE_ENV === 'development' ||
@@ -79,13 +78,13 @@ function createWindow() {
   
   win.on("minimize", function(event) {
     event.preventDefault();
-    win.hide();
+    hideApp();
   });
 
   win.on("close", function(event) {
     if (!app.isQuiting) {
       event.preventDefault();
-      win.hide();
+      hideApp();
     }
 
     return false;
@@ -95,7 +94,6 @@ function createWindow() {
 
   createTray();
 
-  console.log("Init database");
   store.dispatch("initDatabase", (app || remote.app).getPath('userData'));
 }
   
@@ -114,9 +112,10 @@ process.on('unhandledRejection', error => {
 
 function createTray() {
 
-  const trayIcon = nativeImage.createFromPath(iconFile);
   tray = new Tray(trayIcon);
-
+  tray.setToolTip('Video Downloader.')
+  tray.setTitle('Video Downloader.')
+  
   tray.on("click", () => {
     hideApp();
   });
@@ -201,7 +200,12 @@ function closeApp() {
 }
 
 function hideApp() {
-  win.isVisible() ? win.hide() : win.show();
+  if ( win.isVisible() ) {
+    win.hide()
+    tray.displayBalloon({title:'Video Downloader.', content: 'Video Downloader.'});
+  } else {
+    win.show();
+  }
 }
 
 ipcMain.on('close-app', function() {

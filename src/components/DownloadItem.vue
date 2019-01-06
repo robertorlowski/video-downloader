@@ -1,6 +1,6 @@
 <template>
   <transition name="router-animation" enter-active-class="animated slideInUp faster">
-    <div class="bg-black text-white flex-1 h-64 w-full mr-6">
+    <div class="bg-black text-white flex-1 h-40 w-full mr-6">
       <loading :active.sync="isLoading" :opacity="0.1" color=white></loading>
       <div class="flex h-36">
         <div class=" w-full bg-grey-darkest rounded-lg flex px-4 py-3">
@@ -52,34 +52,12 @@
         </div>
       </div>
     </div>
-<!--
-
-    <div class="w-1/2 ml-4 bg-grey-darkest rounded-lg px-8 py-6" @click="story('Apps That Look Great in Dark Mode')">
-        <div class="uppercase text-grey-light text-xs mb-1">Collection</div>
-        <h1 class="font-normal text-2xl mb-4">Apps That Look Great in Dark Mode</h1>
-        <p class="text-grey-light text-xs leading-normal mb-4">Dark is the new black.</p>
-        <img src="../assets/icons_darkmode.png" alt="icons">
-      </div>
-  </div>
-
-
-  <div class="ml-56 flex-1 text-white pt-10 px-10">
-    <h1 class="mb-12">{{ title }}</h1>
-    <p></p>
-    --<button class="text-white bg-blue px-4 py-2 rounded-lg" @click="$router.go(-1)">Back</button>--
-    <button class="text-white bg-blue px-4 py-2 rounded-lg" @click="youTube()">Back</button>
-  
-      
-    </div>    
-  </div>
--->
   </transition>
 </template>
 
 <script>
-  // Import component
+  
   import Loading from 'vue-loading-overlay';
-  // Import stylesheet
   import 'vue-loading-overlay/dist/vue-loading.css';
   import Utils from '../Utils';
 
@@ -175,9 +153,22 @@
           
           video.on('end', () => {
             this.isDownloading = false;
+            this.addHistory(this.url, this.title, this.thumbnailUrl);            
           });
         });   
+      },
+
+      addHistory( url, title, thumbnailUrl ){
+      
+        const hist = {  
+          videoUrl: url,
+          imgUrl:thumbnailUrl,
+          title,
+          dateExec: new Date()
+        };
+        this.$emit('addHistory',  hist);      
       }
     }
+    
   }
 </script>

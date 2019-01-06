@@ -37,7 +37,7 @@
     created () {
       // handling errors
       bus.$on("onError", (errorMsg, url) => {
-          this.flash('<b>Application error:</b> ' + errorMsg + ' <br/><br/> <small><i>' + url + '</i></small>', 
+          this.flash('<b>Application error: </b> ' + errorMsg + ' <br/><br/> <small><i>' + url + '</i></small>', 
             'error',{
             timeout: 5000
           });

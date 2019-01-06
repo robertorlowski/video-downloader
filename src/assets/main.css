@@ -43,6 +43,11 @@
   min-height: 110px;
 }
 
+.button-window {
+  height: 22px;
+  width: 22px;
+}
+
 
 /* CHECKBOX TOGGLE SWITCH */
 .form-switch {

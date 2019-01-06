@@ -20,7 +20,8 @@ export default {
     });
 
     if (!fs.existsSync(configFilePath)) {
-      this._prepareCollection('settings');  
+      this._prepareCollection('settings'); 
+      this._prepareCollection('history'); 
     }
 
     this.database.loadDatabase(null, (err) =>{
@@ -84,6 +85,38 @@ export default {
         autoDownload: data.autoDownload
     });
     settings.flushChanges();
+  },
+
+  history(callback) {
+    var history = this.database.getCollection("history");
+  
+    if (history != null && history != undefined) {     
+      callback(history.data);
+    } else {
+      callback([]);
+    }
+  },
+
+  updateHistory(hist) {
+    var history = this.database.getCollection("history");   
+
+    if (history == null && history == undefined) {
+        this._prepareCollection('history');
+        history = this.database.getCollection("history");  
+    }
+
+    history.clear();
+    hist.forEach(element => {
+      history.insert({
+        videoUrl: element.videoUrl,
+        imgUrl: element.imgUrl,
+        title: element.title,
+        dateExec: element.dateExec
+      });
+        
+    });
+
+    history.flushChanges();
   }
   
 };
