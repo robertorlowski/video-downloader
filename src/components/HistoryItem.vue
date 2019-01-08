@@ -4,8 +4,8 @@
       <div class="ml-3 my-3 w-32 rounded">
         <img v-bind:src="hist.imgUrl" alt="icon">
       </div>
-      <div class="w-76 my-3 ml-1">
-        <div class="h-13">{{hist.title}}</div>
+      <div class="w-75 my-3 ml-1">
+        <div class="text-base w-full h-13 relative">{{hist.title}}</div>
         <div class="flex w-full">
           <div class="flex-1">
             <div class="text-grey text-xs mt-1">Author: {{hist.author}}</div>

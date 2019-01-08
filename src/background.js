@@ -230,3 +230,17 @@ ipcMain.on('choose-folder', function() {
       }
   });
 });
+
+ipcMain.on("yt-search", function(event, search) {
+  let yts = require( './modules/yt-search' );
+  yts( search, function ( err, r ) {
+    const list = r.videos;
+    event.returnValue = list;
+  });
+});
+
+ipcMain.on('downloaded', function(event, title) {
+  event.preventDefault = true;
+  tray.displayBalloon({title:'Video Downloader.', content: 'Video downloaded: ' + title});
+});
+

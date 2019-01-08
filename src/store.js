@@ -77,6 +77,11 @@ export default new Vuex.Store({
     videoCount: state => {
       return state.videoIds.length;
     },
+
+    videoIds: state => {
+      return state.videoIds;
+    },
+    
     videoLastAdded: state => {
       if ( state.videoIds.length == 0 ) {
         return null;

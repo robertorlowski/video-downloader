@@ -1,56 +1,60 @@
 <template>
   <transition name="router-animation" enter-active-class="animated slideInUp faster">
-    <div class="bg-black text-white flex-1 h-40 w-full mr-6">
+    <div class="bg-grey-darkest text-white flex mr-3 mb-3 h-28 rounded">
       <loading :active.sync="isLoading" :opacity="0.1" color=white></loading>
-      <div class="flex h-36">
-        <div class=" w-full bg-grey-darkest rounded-lg flex px-4 py-3">
-          <div class="text-right mr-5 w-40 h-24 rounded">
-            <img v-bind:src="thumbnailUrl" class="bg-grey-darkest w-40 rounded">
-          </div>
-
-          <div class="flex-1">
-              <h1 class="font-normal text-lg mb-1">{{title}}</h1>
-              
-              <div class="text-grey-light text-xs mt-1 mb-1">Author: {{author}}</div>
-
-              <div class="w-full pt-1  text-center">
-                <div class="shadow w-full bg-grey-light text-grey-darkest ">
-                <div class="bg-orange text-xs leading-none" v-bind:style="{ width: progress + '%' }">_</div>
-                </div>
-              </div>
-
-              <div class="flex w-full mb-2 mt-1">
-                <div class="text-grey-light text-xs w-28">Progress: {{progress}} %</div>
-                <div v-if="size" class="text-grey-light text-xs">Size: {{size}}</div>
-              </div>
-
-              <button class="uppercase text-white bg-blue mr-3 px-4 py-2 rounded" @click="play()">
-                <svg fill="currentColor" class="mr-2" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 20 20">
-                <path d="M4 4l12 6-12 6z"/>
-                </svg>
-                <span class="align-text-top">Play</span>
-              </button>
-              <button class="uppercase text-white bg-blue mr-3 px-4 py-2 rounded" @click="del()">
-                <svg fill="currentColor" class="mr-2" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 18 18">
-                  <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
-                </svg>
-                <span class="align-text-top">Delete</span>
-              </button>
-              <button class="uppercase text-white bg-blue mr-3 px-4 py-2 rounded" @click="download()" v-if="!isDownloading">
-                <svg fill="currentColor" class="mr-2" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 20 20">
-                  <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/>
-                </svg>
-                <span class="align-text-top">Download</span>
-              </button>
-              <button class="uppercase text-white bg-blue mr-3 px-4 py-2 rounded" @click="cancel()" v-if="isDownloading">
-                <svg fill="currentColor" class="mr-2" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 20 20">
-                  <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
-                </svg>
-                <span class="align-text-top">Cancel</span>
-              </button>
-          </div>
-        </div>
+      <div class="ml-3 mt-3 w-32 rounded">
+        <img v-bind:src="thumbnailUrl"  alt="icon">
       </div>
+      <div class="w-75 mt-3 ml-1 pr-2">
+        <div class="text-base w-full h-10 relative">{{title}}</div>              
+        <div class="flex w-full">
+          <div class="shadow w-full bg-grey-light text-grey-darkest ">
+            <div class="bg-orange text-s leading-none" v-bind:style="{ width: progress + '%' }">_</div>
+          </div>
+        </div>        
+        <div class="flex w-full pt-1">
+          <div class="flex-1">
+            <div class="text-grey-light text-xs mt-1 mb-1">Author: {{author}}</div>
+        
+            <div v-if="size" class="text-grey-light text-xs">Size: {{size}}</div>
+          </div>
+          <button class="uppercase text-white bg-blue mr-2 h-10 w-10 px-1 rounded-full" @click="play()">
+            <svg
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16px"
+              height="16px"
+              viewBox="0 0 18 18"
+            >
+              <path d="M4 4l12 6-12 6z"></path>
+            </svg>
+          </button>
+
+          <button class="uppercase text-white bg-blue mr-2 h-10 w-10 px-1 rounded-full" @click="del()">
+            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 18 18">
+              <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
+            </svg>
+          </button>
+
+          <button class="uppercase text-white bg-blue h-10 w-10 px-1 rounded-full" @click="download()" v-if="!isDownloading">
+            <svg
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18px"
+              height="18px"
+              viewBox="0 0 20 20"
+            >
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"></path>
+            </svg>                
+          </button>
+          
+          <button class="uppercase text-white bg-blue h-10 w-10 px-1 rounded-full" @click="cancel()" v-if="isDownloading">
+            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 20 20">
+              <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
+            </svg>
+          </button>
+        </div>
+      </div>        
     </div>
   </transition>
 </template>
@@ -60,6 +64,7 @@
   import Loading from 'vue-loading-overlay';
   import 'vue-loading-overlay/dist/vue-loading.css';
   import Utils from '../Utils';
+  import { ipcRenderer } from "electron";
 
   const ytdl = require('ytdl-core');
   var video;
@@ -96,13 +101,13 @@
           if (this.autoDownload) {
             this.download();
           }  
-          //console.log(info);
       });
     },
 
     methods: {      
       play() {
-        this.$emit('playVideo',  this.url, this.title);           
+        this.$emit('playVideo',  this.url, this.title);   
+                
       },
       
       del() {
@@ -122,13 +127,12 @@
       download() {
         const path = require('path');
         const fs   = require('fs');
-          
+        const self = this;
+
         const output = path.resolve(
                 this.destinanionFolder.toString().replace('\\','\\\\'), 
-                //this.title.toString().replace(':','').replace('.','').replace('|','').replace('\\','').replace('&','') +'.mp4');                  
                 Utils.slugify(this.title.toString()) + '.mp4'
         );
-        //console.log(output);
 
         ytdl.getInfo(this.url, (err, info) => {
           if (err) 
@@ -148,12 +152,13 @@
             this.size = ((total /1000000).toFixed(0)).toString() +" MB";
             const percent = downloaded / total;
             this.progress = (percent * 100).toFixed(0);
-            //console.log(`${(percent * 100).toFixed(0)}% downloaded`);
           });
           
           video.on('end', () => {
             this.isDownloading = false;
-            this.addHistory(this.url, this.title, this.thumbnailUrl);            
+            this.addHistory(this.url, this.title, this.thumbnailUrl);      
+            ipcRenderer.send("downloaded", this.title);  
+            self.$emit('deleteItem',  this.itemId);         
           });
         });   
       },

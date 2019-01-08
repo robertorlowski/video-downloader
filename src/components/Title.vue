@@ -1,5 +1,5 @@
 <template>
-    <div class="discover-banner max-w-full text-white pl-8 rounded-bl-lg pt-5 mb-8 flex">
+    <div class="discover-banner max-w-full text-white pl-8 rounded-bl-lg pt-5 mb-8 flex" style="-webkit-app-region: drag">
       <div class="w-1/2 flex-1">
           <h1 class="font-normal mb-2">Video Downloader</h1>
           <p class="w-64 leading-normal text-grey-lighter">{{title}}</p>

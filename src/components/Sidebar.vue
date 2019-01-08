@@ -17,16 +17,23 @@
     </div>
     
     <div class="sidebar-icons clickable pt-6">    
-      <router-link to="/" class="sidebar-icon flex items-center px-4 py-2 text-grey cursor-pointer hover:bg-grey-darker no-underline ">
-        <svg fill="currentColor" class="mr-3" width="24px" height="24px" viewBox="0 0 20 20">
-          <path d="M0 4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm6 0v12h8V4H6zM2 5v2h2V5H2zm0 4v2h2V9H2zm0 4v2h2v-2H2zm14-8v2h2V5h-2zm0 4v2h2V9h-2zm0 4v2h2v-2h-2zM8 7l5 3-5 3V7z"/>
+
+      <router-link to="/" class="sidebar-icon flex items-center px-4 py-2 text-grey cursor-pointer hover:bg-grey-darker no-underline">
+          <svg width="24px" class="mr-3" height="24px" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+          <path fill="currentColor" d="M1216 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"/>
+          </svg>
+        <div class="text-white">Search</div>
+      </router-link>
+
+      <router-link to="/download" class="sidebar-icon flex items-center px-4 py-2 text-grey cursor-pointer hover:bg-grey-darker no-underline ">
+        <svg class="mr-3" width="24px" height="24px" viewBox="0 0 20 20">
+          <path fill="currentColor" d="M0 4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm6 0v12h8V4H6zM2 5v2h2V5H2zm0 4v2h2V9H2zm0 4v2h2v-2H2zm14-8v2h2V5h-2zm0 4v2h2V9h-2zm0 4v2h2v-2h-2zM8 7l5 3-5 3V7z"/>
         </svg>
         <div class="text-white flex">YouTube 
         </div>
         <div class="bg-red-light text-white  rounded ml-1 pl-1 pr-2 pb-1  " v-if="videoCount>0">
           <i><small>{{videoCount}}</small></i>
         </div>
-
       </router-link>
 
       <router-link to="/history" class="sidebar-icon flex items-center px-4 py-2 text-grey cursor-pointer hover:bg-grey-darker no-underline">

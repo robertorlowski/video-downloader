@@ -2,7 +2,7 @@
   <div id="app" style="-webkit-user-select: none" class="font-sans flex-1 min-h-screen bg-black">    
     <sidebar></sidebar>
     <!-- <transition name="router-animation" enter-active-class="animated slideInUp faster"> -->
-    <keep-alive include="main-view">
+    <keep-alive :include="['download','search']">
       <router-view/>
     </keep-alive>
     <flash-message class="h-1"></flash-message>

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import MainView from "./views/Main.vue";
+import SearchView from "./views/Search.vue";
+import Download from "./views/Download.vue";
 
 Vue.use(Router);
 
@@ -10,9 +11,14 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "main-view",
-      component: MainView
+      name: "search",
+      component: SearchView
     },
+    {
+      path: "/download",
+      name: "download",
+      component: Download
+    },       
     {
       path: "/settings",
       name: "settings",
@@ -28,7 +34,7 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "history" */ "./views/History.vue")
-    },    
+    },        
     {
       path: "/player",
       name: "player",
