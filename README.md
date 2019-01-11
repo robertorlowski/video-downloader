@@ -1,9 +1,8 @@
 # Video Downloader #
 ![](doc/download_1.PNG)
 
-## Download application - Windows ##
-[Download link - Video Downloader](https://github.com/robertorlowski/video-downloader/releases/download/v0.1.0/Video.Downloader.Setup.0.1.0.exe)
-
+## Download application ##
+[Download link - Video Downloader](https://github.com/robertorlowski/video-downloader/releases/latest#link)
 
 ## Project setup
 ```
