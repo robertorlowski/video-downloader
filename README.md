@@ -1,8 +1,7 @@
 # Video Downloader #
 ![](doc/download_1.PNG)
-![](doc/download_2.PNG)
 
-## Download ##
+## Download application win64##
 [Download link - Video Downloader](https://github.com/robertorlowski/video-downloader/releases/latest#link)
 
 
