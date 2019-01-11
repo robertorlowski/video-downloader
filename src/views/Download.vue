@@ -40,23 +40,14 @@ export default {
       itemCount: 0
     }
   },
-  mounted() {
-    this.$store.getters.videoIds.forEach(item => {
-      this.prepareVideo(item);      
-    });          
+ mounted() {
+    this.$appData.videoIds.forEach(element => {
+      this.prepareVideo(element); 
+    });
 
-    this.$store.subscribe((mutation)=>{
-      if (mutation.type ==='addVideo') {
-        //console.log(state.videoIds);
-
-        const vvv = this.$store.getters.videoLastAdded;
-        //console.log(vvv);
-        
-        if ( vvv == undefined || vvv == null ) {
-          return;
-        }
-        this.prepareVideo(vvv);        
-      }  
+    this.$eventBus.$on("onAddVideo", (url) => {
+      console.log(url);
+      this.prepareVideo(url); 
     });
   },
   methods: {
@@ -81,7 +72,7 @@ export default {
     },
 
     addVideo(url){
-      this.$store.dispatch("addVideo", url);
+      this.$eventBus.$emit("onAddVideo", url);             
     },
     
     prepareVideo(url){
@@ -107,7 +98,8 @@ export default {
         if ( itemElement === undefined) {
           return;
         }
-        this.$store.dispatch("removeVideo", url);
+        //this.$store.dispatch("removeVideo", url);
+        this.$eventBus.$emit("onRemoveVideo", url);
         this.$refs.downloadItems.removeChild(itemElement);
       });
       
@@ -118,9 +110,6 @@ export default {
         });     
       });
 
-      instance.$on('addHistory', (hist) => {
-        this.$store.dispatch("addHistory",hist);    
-      }); 
       this.$refs.url.value = "";
     }
   }

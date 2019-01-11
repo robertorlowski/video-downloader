@@ -1,6 +1,6 @@
 
 <template>
-  <!--<button id="close" class="clickable"  @click="closeApp">Close</button>-->
+  <!--<button id="close" class="clickable"  @click="closeApp">Close</button>-->  
   <div class="w-56 bg-grey-darkest text-white border-r border-backblack fixed min-h-screen pt-3" style="-webkit-app-region: drag">
     <div class="w-full flex-1 pl-4 pt-1">
         <button class="clickable select-none text-white bg-red-light rounded-full button-window" @click="close">          
@@ -62,15 +62,19 @@ export default {
     close: function() {
       ipcRenderer.send("close-app");
     },
+
     hide: function() {
       ipcRenderer.send("hide-app");
     }
   },
   computed: {
-    videoCount() {
-      return this.$store.getters.videoCount;
-    }
-  } 
+    videoCount: {
+      get: function () {
+        return this.$eventBus.videoIds.length
+      }
+    } 
+
+  }
 };
 </script>
 

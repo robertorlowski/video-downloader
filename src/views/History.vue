@@ -10,6 +10,7 @@
 <script>
 import headerapp from '../components/Title.vue';
 import HistoryItem from '../components/HistoryItem.vue';    
+import { ipcRenderer } from "electron";
 
 export default {
   name: "history",
@@ -24,7 +25,7 @@ export default {
   computed: {
     history: {
         get () {
-          return this.$store.getters.history;
+          return ipcRenderer.sendSync("history-get");
         }
     }
   }

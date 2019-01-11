@@ -1,12 +1,10 @@
 <template>
-  <div id="app" style="-webkit-user-select: none" class="font-sans flex-1 min-h-screen bg-black">    
-    <sidebar></sidebar>
-    <!-- <transition name="router-animation" enter-active-class="animated slideInUp faster"> -->
+  <div id="app" style="-webkit-user-select: none" class="font-sans flex-1 min-h-screen bg-black">        
+    <sidebar></sidebar>    
+    <flash-message class="message"></flash-message>
     <keep-alive :include="['download','search']">
       <router-view/>
     </keep-alive>
-    <flash-message class="h-1"></flash-message>
-    <!-- </transition> -->
   </div>
 </template>
 
@@ -39,7 +37,7 @@
       bus.$on("onError", (errorMsg, url) => {
           this.flash('<b>Application error: </b> ' + errorMsg + ' <br/><br/> <small><i>' + url + '</i></small>', 
             'error',{
-            timeout: 5000
+            timeout: 10000
           });
       });
 

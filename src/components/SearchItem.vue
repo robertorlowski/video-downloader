@@ -54,13 +54,12 @@ export default {
     play() {
       this.$router.push({
         name: 'player',
-        params: { url: "https://www.youtube.com" + this.item.url, title: this.item.title, router: "history" }
+        params: { url: "https://www.youtube.com" + this.item.url, title: this.item.title, router: "search" }
       });   
     },
   },
   computed: {
     img() {
-      console.log(this.item.videoId);
       return "https://img.youtube.com/vi/" + this.item.videoId +"/default.jpg";
     } 
   }

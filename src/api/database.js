@@ -91,13 +91,40 @@ export default {
     var history = this.database.getCollection("history");
   
     if (history != null && history != undefined) {     
-      callback(history.data);
+      callback(history.chain()
+        .sort(function(obj1, obj2) {
+                if (obj1.dateExec === obj2.dateExec) return 0;
+                if (obj1.dateExec > obj2.dateExec) return -1;
+                if (obj1.dateExec < obj2.dateExec) return 1;
+              })
+        .limit(100)
+        .data());
     } else {
       callback([]);
     }
   },
 
-  updateHistory(hist) {
+  historyAdd(hist, callback) {
+    var history = this.database.getCollection("history");   
+
+    if (history == null && history == undefined) {
+        this._prepareCollection('history');
+        history = this.database.getCollection("history");  
+    }
+
+    history.insert({
+      videoUrl: hist.videoUrl,
+      imgUrl: hist.imgUrl,
+      title: hist.title,
+      dateExec: hist.dateExec
+    });
+
+    history.flushChanges();
+
+    callback(null);
+  },
+
+  historyClear(callback) {
     var history = this.database.getCollection("history");   
 
     if (history == null && history == undefined) {
@@ -106,17 +133,8 @@ export default {
     }
 
     history.clear();
-    hist.forEach(element => {
-      history.insert({
-        videoUrl: element.videoUrl,
-        imgUrl: element.imgUrl,
-        title: element.title,
-        dateExec: element.dateExec
-      });
-        
-    });
-
     history.flushChanges();
-  }
-  
+
+    callback(null);
+  }  
 };

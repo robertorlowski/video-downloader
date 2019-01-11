@@ -18,6 +18,7 @@ import {
 } from "vue-cli-plugin-electron-builder/lib";
 
 import store from "./store";
+import database from "./api/database";
 
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -184,8 +185,9 @@ if (isDevelopment) {
 }
 
 function closeApp() {
-  console.log("close database");
+  
   store.subscribe((mutation)=>{
+    console.log("close database");
     if (mutation.type ==='closeDatabase') {
       console.log("close app");
       app.isQuiting = true;
@@ -195,7 +197,7 @@ function closeApp() {
       }    
     }  
   });
-  
+  console.log("dispatch-closeDatabase");
   store.dispatch("closeDatabase");
 }
 
@@ -240,7 +242,29 @@ ipcMain.on("yt-search", function(event, search) {
 });
 
 ipcMain.on('downloaded', function(event, title) {
-  event.preventDefault = true;
   tray.displayBalloon({title:'Video Downloader.', content: 'Video downloaded: ' + title});
 });
+
+ipcMain.on('history-get', function(event) {
+  database.history((history)=>{
+    event.returnValue = history;
+  });  
+});
+
+ipcMain.on('history-add', function(event, hist) {
+  database.historyAdd(hist, (err) => {
+    if(err) {
+      throw err;
+    }
+  });
+});
+
+ipcMain.on('history-clear', function(event) {
+  database.historyClear((err) => {
+    if(err) {
+      throw err;
+    }
+  });
+});
+
 

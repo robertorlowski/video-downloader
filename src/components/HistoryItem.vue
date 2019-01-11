@@ -65,11 +65,12 @@ export default {
   },
   methods: {
     download() {
-      this.$store.dispatch("addVideo", this.hist.videoUrl);
+      //this.$store.dispatch("addVideo", this.hist.videoUrl);
+      this.$eventBus.$emit("onAddVideo", this.hist.videoUrl);
+
       this.flash('Video <b>'+ this.hist.title +'</b> has been added to download list',
-        'alert-warning', {
+        'warning', {
             timeout: 1000,
-            displayIcons: true,
             icons: 'warning'
       });
     },

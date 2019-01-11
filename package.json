@@ -13,6 +13,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "@smartweb/vue-flash-message": "^0.4.1",
     "animate.css": "^3.7.0",
     "cheerio": "^1.0.0-rc.2",
     "electron-unhandled": "^2.1.0",

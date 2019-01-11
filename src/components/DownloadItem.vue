@@ -3,7 +3,7 @@
     <div class="bg-grey-darkest text-white flex mr-3 mb-3 h-28 rounded">
       <loading :active.sync="isLoading" :opacity="0.1" color=white></loading>
       <div class="ml-3 mt-3 w-32 rounded">
-        <img v-bind:src="thumbnailUrl"  alt="icon">
+        <img v-bind:src="thumbnailUrl"  alt="">
       </div>
       <div class="w-75 mt-3 ml-1 pr-2">
         <div class="text-base w-full h-10 relative">{{title}}</div>              
@@ -63,7 +63,7 @@
   
   import Loading from 'vue-loading-overlay';
   import 'vue-loading-overlay/dist/vue-loading.css';
-  import Utils from '../Utils';
+  import Utils from '../common/Utils';
   import { ipcRenderer } from "electron";
 
   const ytdl = require('ytdl-core');
@@ -156,7 +156,7 @@
           
           video.on('end', () => {
             this.isDownloading = false;
-            this.addHistory(this.url, this.title, this.thumbnailUrl);      
+            this.addHistory(this.url, this.title, this.thumbnailUrl);
             ipcRenderer.send("downloaded", this.title);  
             self.$emit('deleteItem',  this.itemId);         
           });
@@ -171,7 +171,7 @@
           title,
           dateExec: new Date()
         };
-        this.$emit('addHistory',  hist);      
+        ipcRenderer.send("history-add", hist);                  
       }
     }
     

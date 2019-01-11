@@ -11,7 +11,7 @@
             <path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path>
           </svg>
         </div>        
-        <button class="uppercase text-white bg-blue h-9 w-10 ml-3 py-2 rounded mr-10" @click="search( $refs.search.value )">
+        <button class="uppercase text-white bg-blue h-9 w-10 ml-3 py-2 rounded mr-10" @click="searchPlayList( $refs.search.value )">
           <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="18px" height="18px">
             <path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"></path>
           </svg>
@@ -30,6 +30,7 @@ import SearchItem from '../components/SearchItem.vue';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import { ipcRenderer } from "electron"; 
+import ytpl from "ytpl";
 
 export default {
   name: "search",
@@ -45,6 +46,32 @@ export default {
     }
   },
   methods: {
+    searchPlayList(url){
+      this.isLoading = true;
+      const self= this;
+      ytpl(url, function(err, playlist) {
+        if(err) {
+          self.search(url)      
+        } else {          
+          self.items = [];
+          playlist.items.forEach(item => {
+            const xxx = {
+              title: item.title,
+              url: "/watch?v=" + item.id,
+              author: {
+                name: item.author.name
+              },
+              videoId: item.id
+            };
+            console.log(xxx);
+            self.items.push(xxx);
+
+          });          
+        }
+      });
+      this.isLoading = false;
+    },
+
     search(_search) {
       console.log(_search);
       if (_search.trim() == "") {
@@ -62,7 +89,8 @@ export default {
 
     onDownload(url, title) {
       console.log(url);
-      this.$store.dispatch("addVideo", "https://www.youtube.com" + url);
+      this.$eventBus.$emit("onAddVideo", "https://www.youtube.com" + url);
+      
       this.flash('Video <b>'+ title +'</b> has been added to download list',
         'alert-warning', {
             timeout: 1000,
@@ -71,16 +99,12 @@ export default {
       });   
 
       for (var i = this.items.length; i--;) {
-        console.log(this.items[i].url);
         if (this.items[i].url === url) {
-          console.log("remove");
           this.items.splice(i, 1);
           return;
         }
       }     
     }, 
-    
-
   }
 }
 </script>
