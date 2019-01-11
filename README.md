@@ -1,4 +1,9 @@
-# video-downloader
+# Video Downloader #
+![](doc/download_1.PNG)
+
+## Download ##
+[Download link - Video Downloader](https://github.com/robertorlowski/video-downloader/releases/latest#link)
+
 
 ## Project setup
 ```
@@ -12,18 +17,5 @@ npm run electron:serve
 
 ### Compiles and minifies for production
 ```
-npm run build
+npm run electron:build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
