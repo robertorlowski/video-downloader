@@ -1,3 +1,5 @@
+[![Codeship Status for robertorlowski/video-downloader](https://app.codeship.com/projects/e3cbeac0-2d94-0137-a3bd-5a69e62a0223/status?branch=master)](https://app.codeship.com/projects/331538)
+
 # Video Downloader #
 ![](doc/download_1.PNG)
 
