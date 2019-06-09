@@ -11,9 +11,13 @@
             <div class="text-grey text-xs mt-1">Author: {{hist.author}}</div>
             <div class="text-grey text-xs mt-1">Date: {{dateExec}}</div>
           </div>
-          <button class="uppercase text-white bg-blue mr-2 h-10 w-10 px-1 rounded-full" @click="play()">
+          <button
+            class="uppercase text-white bg-blue mr-2 h-9 w-9 px-1 rounded-full button-action"
+            @click="play()"
+          >
             <svg
               fill="currentColor"
+              style="top: 1px; left: 1px; position: relative;"
               xmlns="http://www.w3.org/2000/svg"
               width="16px"
               height="16px"
@@ -22,19 +26,21 @@
               <path d="M4 4l12 6-12 6z"></path>
             </svg>
           </button>
-          
-          <button class="uppercase text-white bg-blue mr-3 h-10 w-10 px-1 rounded-full" @click="download()">
+
+          <button
+            class="uppercase text-white bg-blue mr-3 h-9 w-9 px-1 rounded-full button-action"
+            @click="download()"
+          >
             <svg
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
-              width="18px"
-              height="18px"
+              width="16px"
+              height="16px"
               viewBox="0 0 20 20"
             >
               <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"></path>
             </svg>
           </button>
-          
         </div>
       </div>
     </div>
@@ -65,20 +71,26 @@ export default {
   },
   methods: {
     download() {
-      //this.$store.dispatch("addVideo", this.hist.videoUrl);
       this.$eventBus.$emit("onAddVideo", this.hist.videoUrl);
 
-      this.flash('Video <b>'+ this.hist.title +'</b> has been added to download list',
-        'warning', {
-            timeout: 1000,
-            icons: 'warning'
-      });
+      this.flash(
+        "Video <b>" + this.hist.title + "</b> has been added to download list",
+        "warning",
+        {
+          timeout: 1000,
+          icons: "warning"
+        }
+      );
     },
     play() {
       this.$router.push({
-        name: 'player',
-        params: { url: this.hist.videoUrl, title: this.hist.title, router: "history" }
-      });   
+        name: "player",
+        params: {
+          url: this.hist.videoUrl,
+          title: this.hist.title,
+          router: "history"
+        }
+      });
     }
   }
 };

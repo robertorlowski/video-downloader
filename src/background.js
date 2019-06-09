@@ -20,25 +20,28 @@ import {
 import store from "./store";
 import database from "./api/database";
 
-
 const isDevelopment = process.env.NODE_ENV !== "production";
 process.env.FLUENTFFMPEG_COV = false;
 
-const path = require('path');
+const path = require("path");
 
-const iconFile = path.join(__static, 'assets/app.png');
-const trayIcon = nativeImage.createFromPath(iconFile);
-/*
+const iconFile = path.join(__static, "assets/app.png");
+let icon = nativeImage.createFromPath(iconFile);
+let trayIcon = icon.resize({
+  width: 64,
+  height: 64,
+  quality: "best"
+});
+
 if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
+  process.env.NODE_ENV === "development" ||
+  process.env.DEBUG_PROD === "true"
 ) {
-  require('electron-debug')();
+  require("electron-debug")();
 
-  const p = path.join(__dirname, '..', 'src', 'node_modules');
-  require('module').globalPaths.push(p);
+  const p = path.join(__dirname, "..", "src", "node_modules");
+  require("module").globalPaths.push(p);
 }
-*/
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -49,17 +52,17 @@ let tray;
 protocol.registerStandardSchemes(["app"], { secure: true });
 
 function createWindow() {
-
   // Create the browser window.
   win = new BrowserWindow({
     width: 1200,
     height: 750,
-    titleBarStyle: "hiddenInset",
+    titleBarStyle: "hiddenInset,customButtonsOnHover",
     frame: false,
     icon: iconFile,
-    webPreferences: {webSecurity: false}
-  })
- 
+    webPreferences: { webSecurity: false }
+  });
+
+  win.setMenuBarVisibility(false);
   win.setOpacity(0.98);
 
   if (isDevelopment) {
@@ -68,7 +71,6 @@ function createWindow() {
     if (!process.env.IS_TEST) {
       win.webContents.openDevTools();
     }
-      
   } else {
     createProtocol("app");
     // Load the index.html when not in development
@@ -76,7 +78,7 @@ function createWindow() {
   }
 
   //win.webContents.openDevTools();
-  
+
   win.on("minimize", function(event) {
     event.preventDefault();
     hideApp();
@@ -95,28 +97,27 @@ function createWindow() {
 
   createTray();
 
-  store.dispatch("initDatabase", (app || remote.app).getPath('userData'));
+  store.dispatch("initDatabase", (app || remote.app).getPath("userData"));
 }
-  
+
 const handleError = (title, error) => {
   console.log(title);
   console.log(error);
-}
+};
 
-process.on('uncaughtException', error => {
-  handleError('Unhandled Error', error);
+process.on("uncaughtException", error => {
+  handleError("Unhandled Error", error);
 });
 
-process.on('unhandledRejection', error => {
-  handleError('Unhandled Promise Rejection', error);
-});   
+process.on("unhandledRejection", error => {
+  handleError("Unhandled Promise Rejection", error);
+});
 
 function createTray() {
-
   tray = new Tray(trayIcon);
-  tray.setToolTip('Video Downloader.')
-  tray.setTitle('Video Downloader.')
-  
+  tray.setToolTip("Video Downloader");
+  tray.setTitle("VD");
+
   tray.on("click", () => {
     hideApp();
   });
@@ -168,7 +169,6 @@ app.on("ready", async () => {
   createWindow();
 });
 
-
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === "win32") {
@@ -185,86 +185,92 @@ if (isDevelopment) {
 }
 
 function closeApp() {
-  
-  store.subscribe((mutation)=>{
+  store.subscribe(mutation => {
     console.log("close database");
-    if (mutation.type ==='closeDatabase') {
+    if (mutation.type === "closeDatabase") {
       console.log("close app");
       app.isQuiting = true;
       app.quit();
       if (tray) {
         tray.destroy();
-      }    
-    }  
+      }
+    }
   });
   console.log("dispatch-closeDatabase");
   store.dispatch("closeDatabase");
 }
 
 function hideApp() {
-  if ( win.isVisible() ) {
-    win.hide()
-    tray.displayBalloon({title:'Video Downloader.', content: 'Video Downloader.'});
+  if (win.isVisible()) {
+    win.hide();
+    tray.displayBalloon({
+      title: "Video Downloader.",
+      content: "Video Downloader."
+    });
   } else {
     win.show();
   }
 }
 
-ipcMain.on('close-app', function() {
+ipcMain.on("close-app", function() {
   closeApp();
 });
 
-ipcMain.on('hide-app', function() {
+ipcMain.on("hide-app", function() {
   hideApp();
 });
 
-ipcMain.on('choose-folder', function() {
-  dialog.showOpenDialog({
-    title:"Select a folder for video files",
-    properties: ["openDirectory"]
-  }, (folderPaths) => {
+ipcMain.on("choose-folder", function() {
+  dialog.showOpenDialog(
+    {
+      title: "Select a folder for video files",
+      properties: ["openDirectory"]
+    },
+    folderPaths => {
       // folderPaths is an array that contains all the selected paths
-      if(folderPaths === undefined){
-          console.log("No destination folder selected");
-          return;
-      }else{
+      if (folderPaths === undefined) {
+        console.log("No destination folder selected");
+        return;
+      } else {
         store.dispatch("updateDestinanionFolder", folderPaths);
       }
-  });
+    }
+  );
 });
 
 ipcMain.on("yt-search", function(event, search) {
-  let yts = require( './modules/yt-search' );
-  yts( search, function ( err, r ) {
+  let yts = require("./modules/yt-search");
+  yts(search, function(err, r) {
     const list = r.videos;
     event.returnValue = list;
   });
 });
 
-ipcMain.on('downloaded', function(event, title) {
-  tray.displayBalloon({title:'Video Downloader.', content: 'Video downloaded: ' + title});
+ipcMain.on("downloaded", function(event, title) {
+  tray.displayBalloon({
+    title: "Video Downloader.",
+    content: "Video downloaded: " + title
+  });
 });
 
-ipcMain.on('history-get', function(event) {
-  database.history((history)=>{
+ipcMain.on("history-get", function(event) {
+  database.history(history => {
     event.returnValue = history;
-  });  
+  });
 });
 
-ipcMain.on('history-add', function(event, hist) {
-  database.historyAdd(hist, (err) => {
-    if(err) {
+ipcMain.on("history-add", function(event, hist) {
+  database.historyAdd(hist, err => {
+    if (err) {
       throw err;
     }
   });
 });
 
-ipcMain.on('history-clear', function(event) {
-  database.historyClear((err) => {
-    if(err) {
+ipcMain.on("history-clear", function() {
+  database.historyClear(err => {
+    if (err) {
       throw err;
     }
   });
 });
-
-

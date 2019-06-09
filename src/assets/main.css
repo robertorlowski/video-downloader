@@ -10,10 +10,9 @@
  * @import "tailwindcss/preflight";
  */
 
+@tailwind preflight;
 
- @tailwind preflight;
-
- .message {
+.message {
   position: fixed;
   right: 0;
   top: 15%;
@@ -24,37 +23,35 @@
 }
 
 .clickable {
-    -webkit-app-region: no-drag;
-  }
+  -webkit-app-region: no-drag;
+}
 
 .border-backblack {
   border-color: black;
 }
 
 ::-webkit-scrollbar {
-  background-color: #2B2B2B;
-  border-left: 1px solid #3E3E3E;
-  width: .65rem;
+  background-color: #2b2b2b;
+  border-left: 1px solid #3e3e3e;
+  width: 0.65rem;
 }
 
 ::-webkit-scrollbar-thumb {
-  background:  #6B6B6B;
+  background: #6b6b6b;
   border-radius: 10px;
 }
 
-.discover-banner{
+.discover-banner {
   background: url("./title.png");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 110px;
+  min-height: 100px;
 }
 
-.button-window {
-  height: 22px;
-  width: 22px;
+.button-action:focus {
+  outline: none;
+  box-shadow: none;
 }
-
-
 
 /* CHECKBOX TOGGLE SWITCH */
 .form-switch {
@@ -70,14 +67,13 @@
 }
 .form-switch-label:before {
   @apply absolute block bg-white pin-y w-6 border rounded-full -ml-1;
-  
+
   right: 50%;
   content: "";
   transition: all 0.2s ease-in;
 }
 .form-switch-checkbox:checked + .form-switch-label,
 .form-switch-checkbox:checked + .form-switch-label:before {
-
 }
 .form-switch-checkbox:checked + .form-switch-label {
   @apply bg-blue shadow-none;
